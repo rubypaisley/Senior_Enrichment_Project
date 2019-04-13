@@ -6,6 +6,8 @@ const { Student, Campus } = require('./db/index').Models;
 
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+
 app.get('/app.js', (req, res, next) => res.sendFile(path.join(__dirname, 'dist', 'main.js')));
 
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')));
@@ -45,6 +47,18 @@ app.get('/api/student/:id', (req, res, next) => {
         }
     })
         .then(student => res.send(student))
+        .catch(next)
+})
+
+app.post('/api/students', (req, res, next) => {
+    Student.create(req.body)
+        .then(student => res.send(student))
+        .catch(next)
+})
+
+app.post('/api/campuses', (req, res, next) => {
+    Campus.create(req.body)
+        .then(campus => res.send(campus))
         .catch(next)
 })
 syncAndSeed()

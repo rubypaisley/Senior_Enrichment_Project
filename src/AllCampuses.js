@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCampuses } from './store';
 import { Link } from 'react-router-dom';
+import CreateCampus from './CreateCampus';
 
 class DisAllCampuses extends Component {
     componentDidMount() {
@@ -9,18 +10,22 @@ class DisAllCampuses extends Component {
     }
     render() {
         return (
-            <ul className="list-group">
-                {this.props.campuses.map(campus => {
-                    return (
-                        <li className="list-group-item" key={campus.id}>
-                            <Link to={`/campus/${campus.id}`} >
-                                {campus.name}
-                                <img src={campus.imageUrl} />
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <div>
+                <ul className="list-group">
+                    {this.props.campuses.map(campus => {
+                        return (
+                            <li className="list-group-item" key={campus.id}>
+                                <Link to={`/campus/${campus.id}`} >
+                                    {campus.name}
+                                    <img src={campus.imageUrl} />
+                                </Link>
+                            </li>
+                        )
+                    })}
+                </ul>
+
+                <CreateCampus />
+            </div>
         )
     }
 

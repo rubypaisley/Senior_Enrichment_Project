@@ -8,6 +8,22 @@ const GET_CAMPUSES = 'GET_CAMPUSES';
 const GET_STUDENTS = 'GET_STUDENTS';
 const GET_SINGLE_STUDENT = 'GET_SINGLE_STUDENT';
 const GET_SINGLE_CAMPUS = 'GET_SINGLE_CAMPUS';
+const ADD_CAMPUS = 'ADD_CAMPUS';
+const ADD_STUDENT = 'ADD_STUDENT';
+
+const addStudentAC = (student) => {
+    return {
+        type: ADD_STUDENT,
+        student
+    }
+}
+
+const addCampusAC = (campus) => {
+    return {
+        type: ADD_CAMPUS,
+        campus
+    }
+}
 
 const getCampusesActionCreator = (campuses) => {
     return {
@@ -41,6 +57,8 @@ const campusReducer = (state = [], action) => {
     switch (action.type) {
         case GET_CAMPUSES:
             return action.campuses;
+        case ADD_CAMPUS:
+            return [...state, action.campus]
         default:
             return state;
     }
@@ -50,6 +68,8 @@ const studentReducer = (state = [], action) => {
     switch (action.type) {
         case GET_STUDENTS:
             return action.students;
+        case ADD_STUDENT:
+            return [...state, action.student];
         default:
             return state;
     }
@@ -68,6 +88,20 @@ const singleCampusReducer = (state = {}, action) => {
         case GET_SINGLE_CAMPUS:
             return action.campus;
         default: return state;
+    }
+}
+
+export const addCampus = (campusInfo) => {
+    return dispatch => {
+        return axios.post('/api/campuses', campusInfo)
+            .then(res => dispatch(addCampusAC(res.data)))
+    }
+}
+
+export const addStudent = (studentInfo) => {
+    return dispatch => {
+        return axios.post('/api/students', studentInfo)
+            .then(res => dispatch(addStudentAC(res.data)))
     }
 }
 
