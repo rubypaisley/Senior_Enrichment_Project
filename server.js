@@ -61,6 +61,22 @@ app.post('/api/campuses', (req, res, next) => {
         .then(campus => res.send(campus))
         .catch(next)
 })
+
+app.delete('/api/campus/:id', (req, res, next) => {
+    Campus.findByPk(req.params.id)
+        .then((campus) => campus.destroy())
+        .then(() => res.sendStatus(204))
+        .catch(next)
+})
+
+app.delete('/api/student/:id', (req, res, next) => {
+    Student.findByPk(req.params.id)
+        .then((student) => student.destroy())
+        .then(() => res.sendStatus(204))
+        .catch(next)
+})
+
+
 syncAndSeed()
     .then(() => app.listen(port, () => console.log(`listening on port ${port}`)))
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addStudent, getCampuses } from './store';
-import { isNullOrUndefined, isNull } from 'util';
 
 class DisCreateStudent extends Component {
     constructor() {

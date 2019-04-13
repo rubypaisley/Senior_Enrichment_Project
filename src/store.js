@@ -10,6 +10,22 @@ const GET_SINGLE_STUDENT = 'GET_SINGLE_STUDENT';
 const GET_SINGLE_CAMPUS = 'GET_SINGLE_CAMPUS';
 const ADD_CAMPUS = 'ADD_CAMPUS';
 const ADD_STUDENT = 'ADD_STUDENT';
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
+const DELETE_STUDENT = 'DELETE_STUDENT';
+
+const deleteStudentAC = (studentId) => {
+    return {
+        type: DELETE_STUDENT,
+        studentId
+    }
+}
+
+const deleteCampusAC = (campusId) => {
+    return {
+        type: DELETE_CAMPUS,
+        campusId
+    }
+}
 
 const addStudentAC = (student) => {
     return {
@@ -59,6 +75,8 @@ const campusReducer = (state = [], action) => {
             return action.campuses;
         case ADD_CAMPUS:
             return [...state, action.campus]
+        case DELETE_CAMPUS:
+            return state.filter(campus => campus.id !== action.campusId)
         default:
             return state;
     }
@@ -70,6 +88,8 @@ const studentReducer = (state = [], action) => {
             return action.students;
         case ADD_STUDENT:
             return [...state, action.student];
+        case DELETE_STUDENT:
+            return state.filter(student => student.id !== action.studentId)
         default:
             return state;
     }
@@ -131,6 +151,20 @@ export const getSingleCampus = (id) => {
     return dispatch => {
         return axios.get(`api/campus/${id}`)
             .then(res => dispatch(getCampusAC(res.data)))
+    }
+}
+
+export const deleteStudent = (id) => {
+    return dispatch => {
+        return axios.delete(`api/student/${id}`)
+            .then(() => dispatch(deleteStudentAC(id)))
+    }
+}
+
+export const deleteCampus = (id) => {
+    return dispatch => {
+        return axios.delete(`/api/campus/${id}`)
+            .then(() => dispatch(deleteCampusAC(id)))
     }
 }
 
