@@ -21,6 +21,32 @@ app.get('/api/campuses', (req, res, next) => {
         .then((campuses) => res.send(campuses))
         .catch(next)
 })
+
+app.get('/api/campus/:id', (req, res, next) => {
+    Campus.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: {
+            model: Student
+        }
+    })
+        .then(campus => res.send(campus))
+        .catch(next)
+})
+
+app.get('/api/student/:id', (req, res, next) => {
+    Student.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: {
+            model: Campus
+        }
+    })
+        .then(student => res.send(student))
+        .catch(next)
+})
 syncAndSeed()
     .then(() => app.listen(port, () => console.log(`listening on port ${port}`)))
 

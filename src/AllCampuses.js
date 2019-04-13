@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCampuses } from './store';
+import { Link } from 'react-router-dom';
 
 class DisAllCampuses extends Component {
     componentDidMount() {
@@ -12,8 +13,10 @@ class DisAllCampuses extends Component {
                 {this.props.campuses.map(campus => {
                     return (
                         <li className="list-group-item" key={campus.id}>
-                            {campus.name}
-                            <img src={campus.imageUrl} />
+                            <Link to={`/campus/${campus.id}`} >
+                                {campus.name}
+                                <img src={campus.imageUrl} />
+                            </Link>
                         </li>
                     )
                 })}

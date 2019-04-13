@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getStudents } from './store';
+import { Link } from 'react-router-dom';
 
 class DisAllStudents extends Component {
     componentDidMount() {
@@ -13,7 +14,9 @@ class DisAllStudents extends Component {
                     this.props.students.map(student => {
                         return (
                             <li className="list-group-item" key={student.id}>
-                                {student.firstName} {student.lastName}
+                                <Link to={`/student/${student.id}`}>
+                                    {student.firstName} {student.lastName}
+                                </Link>
                             </li>
                         )
                     })

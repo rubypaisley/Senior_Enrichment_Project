@@ -6,6 +6,8 @@ import thunk from 'redux-thunk'
 
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const GET_STUDENTS = 'GET_STUDENTS';
+const GET_SINGLE_STUDENT = 'GET_SINGLE_STUDENT';
+const GET_SINGLE_CAMPUS = 'GET_SINGLE_CAMPUS';
 
 const getCampusesActionCreator = (campuses) => {
     return {
@@ -18,6 +20,20 @@ const getStudentsActionCreator = (students) => {
     return {
         type: GET_STUDENTS,
         students
+    }
+}
+
+const getStudentAC = (student) => {
+    return {
+        type: GET_SINGLE_STUDENT,
+        student
+    }
+}
+
+const getCampusAC = (campus) => {
+    return {
+        type: GET_SINGLE_CAMPUS,
+        campus
     }
 }
 
@@ -39,6 +55,22 @@ const studentReducer = (state = [], action) => {
     }
 }
 
+const singleStudentReducer = (state = {}, action) => {
+    switch (action.type) {
+        case GET_SINGLE_STUDENT:
+            return action.student;
+        default: return state;
+    }
+}
+
+const singleCampusReducer = (state = {}, action) => {
+    switch (action.type) {
+        case GET_SINGLE_CAMPUS:
+            return action.campus;
+        default: return state;
+    }
+}
+
 export const getCampuses = () => {
     return dispatch => {
         return axios.get('/api/campuses')
@@ -53,7 +85,22 @@ export const getStudents = () => {
     }
 }
 
-const reducer = combineReducers({ campuses: campusReducer, students: studentReducer })
+export const getSingleStudent = (id) => {
+    return dispatch => {
+        return axios.get(`/api/student/${id}`)
+            .then(res => dispatch(getStudentAC(res.data)))
+    }
+}
+
+export const getSingleCampus = (id) => {
+    console.log(id)
+    return dispatch => {
+        return axios.get(`api/campus/${id}`)
+            .then(res => dispatch(getCampusAC(res.data)))
+    }
+}
+
+const reducer = combineReducers({ campuses: campusReducer, students: studentReducer, campus: singleCampusReducer, student: singleStudentReducer })
 
 
 const store = createStore(
