@@ -9,11 +9,11 @@ class DisSingleStudent extends Component {
     }
     render() {
         if (!this.props.student.id) {
-            return <div>loading</div>
+            return <div>student not found</div>
         }
         const { student } = this.props;
         return (
-            <div>
+            <div className="container d-flex flex-column align-items-center">
                 <h4>{student.firstName} {student.lastName}</h4>
                 <img src={student.imageUrl} />
                 <p>Email: {student.email}</p>

@@ -27,6 +27,13 @@ const deleteCampusAC = (campusId) => {
     }
 }
 
+const deleteCampusStudentsAC = (campusId) => {
+    return {
+        type: DELETE_CAMPUS,
+        campusId
+    }
+}
+
 const addStudentAC = (student) => {
     return {
         type: ADD_STUDENT,
@@ -90,6 +97,12 @@ const studentReducer = (state = [], action) => {
             return [...state, action.student];
         case DELETE_STUDENT:
             return state.filter(student => student.id !== action.studentId)
+        case DELETE_CAMPUS:
+            return state.reduce((accum, student) => {
+                if (student.campusId === action.campusId) student.campusId = null;
+                accum.push(student);
+                return accum;
+            }, [])
         default:
             return state;
     }
@@ -165,6 +178,7 @@ export const deleteCampus = (id) => {
     return dispatch => {
         return axios.delete(`/api/campus/${id}`)
             .then(() => dispatch(deleteCampusAC(id)))
+            .then(() => dispatch(deleteCampusStudentsAC(id)))
     }
 }
 

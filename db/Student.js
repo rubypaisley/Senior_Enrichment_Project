@@ -26,7 +26,10 @@ const Student = db.define('student', {
     },
     imageUrl: {
         type: Sequelize.STRING,
-        defaultValue: 'https://ichef.bbci.co.uk/news/660/cpsprodpb/7098/production/_104842882_students.jpg'
+        defaultValue: 'https://ichef.bbci.co.uk/news/660/cpsprodpb/7098/production/_104842882_students.jpg',
+        validate: {
+            isUrl: true
+        }
     },
     gpa: {
         type: Sequelize.FLOAT,

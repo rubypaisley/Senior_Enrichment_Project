@@ -12,6 +12,9 @@ const Campus = db.define('campus', {
     imageUrl: {
         type: Sequelize.STRING,
         defaultValue: 'https://lh5.googleusercontent.com/p/AF1QipPIZLy6k-hclcODfoIu4O1wz6VHCOH8_M13rYWY=w213-h160-k-no',
+        validate: {
+            isUrl: true
+        }
 
     },
     address: {

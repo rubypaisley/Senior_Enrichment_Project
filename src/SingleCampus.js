@@ -11,13 +11,13 @@ class DisSingleCampus extends Component {
     render() {
         const { campus } = this.props;
         if (!campus.id) {
-            return <div>loading</div>
+            return <div>campus not found</div>
         }
 
         console.log(campus)
 
         return (
-            <div className="container">
+            <div className="container d-flex flex-column align-items-center">
                 <h3>{campus.name}</h3>
                 <img src={campus.imageUrl} />
                 <span>{campus.address}</span>

@@ -1,40 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { getCampuses, deleteCampus } from './store';
+import { deleteCampus } from './store';
 import { Link } from 'react-router-dom';
 import CreateCampus from './CreateCampus';
 
-class DisAllCampuses extends Component {
-    componentDidMount() {
-        this.props.getCampuses();
-    }
-    render() {
-        return (
-            <div>
-                <ul className="list-group">
-                    {this.props.campuses.map(campus => {
-                        return (
-                            <li className="list-group-item" key={campus.id}>
+const DisAllCampuses = (props) => {
+
+    return (
+        <div>
+            <ul className="list-group">
+                {props.campuses.map(campus => {
+                    return (
+                        <li className="list-group-item" key={campus.id} >
+                            <div className="d-flex justify-content-between align-items-center">
+                                <img src={campus.imageUrl} width="100" />
                                 <Link to={`/campus/${campus.id}`} >
                                     {campus.name}
-                                    <img src={campus.imageUrl} />
                                 </Link>
-                                <button className="btn-warning" type="button" onClick={() => this.props.deleteCampus(campus.id)}>X</button>
-                            </li>
-                        )
-                    })}
-                </ul>
+                                <button className="btn-warning" type="button" onClick={() => props.deleteCampus(campus.id)}>X</button>
+                            </div>
+                        </li>
+                    )
+                })}
+            </ul>
 
-                <CreateCampus />
-            </div>
-        )
-    }
+            <CreateCampus />
+        </div>
+    )
+
 
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getCampuses: () => dispatch(getCampuses()),
         deleteCampus: (id) => dispatch(deleteCampus(id))
     }
 }

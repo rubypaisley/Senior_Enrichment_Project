@@ -18,19 +18,30 @@ class DisCreateCampus extends Component {
     }
     handleSubmit = (evt) => {
         evt.preventDefault()
-        this.props.addCampus(this.state)
+        const campusInfo = this.state;
+        if (campusInfo.imageUrl === '') delete campusInfo.imageUrl
+        this.props.addCampus(campusInfo)
         this.setState({
             name: '',
             address: '',
-            description: ''
+            description: '',
+            imageUrl: ''
         })
     }
+    validate = (name, address) => {
+        return {
+            name: name.length === 0,
+            address: address.length === 0
+        }
+    }
     render() {
+        const errors = this.validate(this.state.name, this.state.address);
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="border container">
+                <h5>Add New Campus:</h5>
                 <div>
                     <label htmlFor="name">
-                        Name:
+                        Name: {errors.name ? <em className="text-danger">required field</em> : ''}
                     </label>
                     <input className="form-control" name="name" type="text" onChange={this.handleChange} value={this.state.name} />
                 </div>
@@ -42,7 +53,7 @@ class DisCreateCampus extends Component {
                 </div>
                 <div>
                     <label htmlFor="address">
-                        Address:
+                        Address: {errors.address ? <em className="text-danger">required field</em> : ''}
                     </label>
                     <input className="form-control" name="address" type="text" onChange={this.handleChange} value={this.state.address} />
                 </div>
@@ -50,7 +61,7 @@ class DisCreateCampus extends Component {
                     <label htmlFor="description">
                         Description:
                     </label>
-                    <input className="form-control" name="description" type="text" onChange={this.handleChange} value={this.state.description} />
+                    <textarea className="form-control" name="description" type="text" onChange={this.handleChange} value={this.state.description} />
                 </div>
                 <button disabled={this.state.name.length === 0 || this.state.address.length === 0 ? true : false} className="btn btn-primary" type="submit">Add Campus</button>
             </form>
