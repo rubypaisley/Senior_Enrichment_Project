@@ -24,7 +24,11 @@ class DisUpdateStudent extends Component {
     handleSubmit = (evt) => {
         evt.preventDefault();
         const studentInfo = this.state;
-        if (studentInfo.campusId === '') studentInfo.campusId = null;
+        if (studentInfo.campusId === '') {
+            studentInfo.campusId = null;
+        } else {
+            studentInfo.campusId = studentInfo.campusId * 1
+        }
         this.props.updateStudent(this.props.student.id, studentInfo)
     }
     render() {

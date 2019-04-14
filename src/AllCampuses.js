@@ -11,13 +11,16 @@ const DisAllCampuses = (props) => {
             <ul className="list-group">
                 {props.campuses.map(campus => {
                     return (
-                        <li className="list-group-item" key={campus.id} >
-                            <div className="d-flex justify-content-between align-items-center">
-                                <img src={campus.imageUrl} width="100" />
-                                <Link to={`/campus/${campus.id}`} >
-                                    {campus.name}
-                                </Link>
-                                <button className="btn-warning" type="button" onClick={() => props.deleteCampus(campus.id)}>X</button>
+                        <li className="list-group-item container" key={campus.id} >
+                            <div className="d-flex align-items-center row">
+                                <img src={campus.imageUrl} width="100" className="col" />
+                                <div className="d-flex flex-column col">
+                                    <Link to={`/campus/${campus.id}`} >
+                                        {campus.name}
+                                    </Link>
+                                    {campus.address}
+                                </div>
+                                <button className="btn-warning col m-6" type="button" onClick={() => props.deleteCampus(campus.id)}>delete campus</button>
                             </div>
                         </li>
                     )

@@ -23,18 +23,30 @@ class DisSingleCampus extends Component {
         console.log(campus)
 
         return (
-            <div className="container d-flex flex-column align-items-center">
+            <div className=" p-4 d-flex flex-column border margin-xs justify-content-between">
                 <h3>{campus.name}</h3>
-                <img src={campus.imageUrl} />
-                <span>{campus.address}</span>
-                <p>{campus.description}</p>
-                <h5>Students:</h5>
-                <ul className="list-group">
-                    {
-                        students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
-                    }
-                </ul>
+                <div className="d-flex flex-row justify-content-between">
+                    <img src={campus.imageUrl} width="500" />
+                    <div className="container d-flew flex-column flex-wrap justify-content-end">
+
+                        <span>{campus.address}</span>
+
+                        <hr />
+
+                        <p>{campus.description}</p>
+
+                    </div>
+                </div>
+                <div>
+                    <h5>Students:</h5>
+                    <ul className="list-group">
+                        {
+                            students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
+                        }
+                    </ul>
+                </div>
                 <button type="button" onClick={this.handleClick} className="btn-primary">Update Campus</button>
+
                 {this.state.showUpdateView ? <UpdateCampus campus={campus} /> : ''}
             </div>
         )
