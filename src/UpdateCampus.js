@@ -32,7 +32,7 @@ class DisUpdateCampus extends Component {
     render() {
         const errors = this.validate(this.state.name, this.state.address);
         return (
-            <CampusForm state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} errors={errors} />
+            <CampusForm heading="Update Campus:" state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} errors={errors} />
         )
     }
 }

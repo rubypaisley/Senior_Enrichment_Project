@@ -42,7 +42,7 @@ class DisCreateStudent extends Component {
 
     render() {
         return (
-            <StudentForm state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} campuses={this.props.campuses} />
+            <StudentForm heading="Add New Student:" state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} campuses={this.props.campuses} />
         )
     }
 }

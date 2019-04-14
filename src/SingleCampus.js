@@ -23,10 +23,10 @@ class DisSingleCampus extends Component {
         console.log(campus)
 
         return (
-            <div className=" p-4 d-flex flex-column border margin-xs justify-content-between">
+            <div className=" p-4 d-flex flex-column border margin-xs align-items-center">
                 <h3>{campus.name}</h3>
-                <div className="d-flex flex-row justify-content-between">
-                    <img src={campus.imageUrl} width="500" />
+                <div className="d-flex flex-row align-items-center">
+                    <img src={campus.imageUrl} style={{ width: 600, height: 400, borderRadius: "50%" }} />
                     <div className="container d-flew flex-column flex-wrap justify-content-end">
 
                         <span>{campus.address}</span>

@@ -38,7 +38,7 @@ class DisCreateCampus extends Component {
     render() {
         const errors = this.validate(this.state.name, this.state.address);
         return (
-            <CampusForm state={this.state} errors={errors} handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
+            <CampusForm state={this.state} errors={errors} handleSubmit={this.handleSubmit} handleChange={this.handleChange} heading="Add New Campus:" />
         )
     }
 }

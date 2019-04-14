@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CampusForm = ({ handleSubmit, handleChange, errors, state }) => {
+const CampusForm = ({ handleSubmit, handleChange, errors, state, heading }) => {
     return (
         <form onSubmit={handleSubmit} className="border container">
-            <h5>Campus Information:</h5>
+            <h5>{heading}</h5>
             <div>
                 <label htmlFor="name">
                     Name: {errors.name ? <em className="text-danger">required field</em> : ''}

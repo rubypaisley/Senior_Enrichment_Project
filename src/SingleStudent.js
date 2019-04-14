@@ -19,19 +19,22 @@ class DisSingleStudent extends Component {
         }
         const { student, campus } = this.props;
         return (
-            <div className="p-4 d-flex flex-column border">
+            <div className="p-4 d-flex flex-column border align-items-center">
                 <h4>{student.firstName} {student.lastName}</h4>
 
-                <div className="d-flex flex-row justify-content-between">
-                    <img src={student.imageUrl} style={{ width: "300px", height: "200px" }} />
-                    <div className="p-2">
+                <div className="d-flex flex-row">
+                    <img src={student.imageUrl} style={{ height: 200, width: 200, borderRadius: "50%", borderColor: "green", borderWidth: 1 }} />
+                    <div className="p-2 flex-grow-1">
                         <h6>Student Info:</h6>
                         <p>Email: {student.email}</p>
                         <p>GPA: {student.gpa}</p>
                         <p> {campus ? <Link to={`/campus/${campus.id}`}>Campus: {campus.name}</Link> : 'Campus Unknown'}</p>
+                        <button className="m-t-2 btn-primary" type="button" onClick={this.onClick}>Update</button>
                     </div>
                 </div>
-                <button className="m-t-2 btn-primary" type="button" onClick={this.onClick}>Update</button>
+
+
+
                 {
                     this.state.showUpdateView ? <UpdateStudent student={student} /> : ''
                 }

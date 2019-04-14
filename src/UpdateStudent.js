@@ -33,7 +33,7 @@ class DisUpdateStudent extends Component {
     }
     render() {
         return (
-            <StudentForm handleSubmit={this.handleSubmit} handleChange={this.handleChange} state={this.state} campuses={this.props.campuses} />
+            <StudentForm heading="Update Student:" handleSubmit={this.handleSubmit} handleChange={this.handleChange} state={this.state} campuses={this.props.campuses} />
         )
     }
 }

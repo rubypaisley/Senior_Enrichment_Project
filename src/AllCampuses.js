@@ -14,13 +14,20 @@ const DisAllCampuses = (props) => {
                         <li className="list-group-item container" key={campus.id} >
                             <div className="d-flex align-items-center row">
                                 <img src={campus.imageUrl} width="100" className="col" />
-                                <div className="d-flex flex-column col">
-                                    <Link to={`/campus/${campus.id}`} >
-                                        {campus.name}
-                                    </Link>
-                                    {campus.address}
+                                <div className="col">
+                                    <div className="d-flex flex-column float-left">
+                                        <Link to={`/campus/${campus.id}`} >
+                                            {campus.name}
+                                        </Link>
+                                        {campus.address}
+                                    </div>
                                 </div>
-                                <button className="btn-warning col m-6" type="button" onClick={() => props.deleteCampus(campus.id)}>delete campus</button>
+                                <div className="col">
+                                    Total Students: {props.students.filter(student => student.campusId === campus.id).length}
+                                </div>
+                                <div className="col">
+                                    <button className="btn-warning float-right" type="button" onClick={() => props.deleteCampus(campus.id)}>delete campus</button>
+                                </div>
                             </div>
                         </li>
                     )
@@ -43,6 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         campuses: state.campuses,
+        students: state.students
     }
 }
 

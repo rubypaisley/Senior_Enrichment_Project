@@ -1,13 +1,13 @@
 import React from 'react'
 
-const StudentForm = ({ state, campuses, handleSubmit, handleChange }) => {
+const StudentForm = ({ state, campuses, handleSubmit, handleChange, heading }) => {
     const validate = (firstName, lastName, email, gpa) => {
         console.log(gpa * 1)
         const gpaValid = gpa * 1 > 4 || isNaN(gpa * 1) ? true : false;
         return {
             firstName: firstName.length === 0,
             lastName: lastName.length === 0,
-            email: email.length === 0,
+            email: !/\S+@\S+\.\S+/.test(email),
             gpa: gpaValid
         }
     }
@@ -21,7 +21,7 @@ const StudentForm = ({ state, campuses, handleSubmit, handleChange }) => {
     }, false)
     return (
         <form onSubmit={handleSubmit} className="border container">
-            <h5>Student Info:</h5>
+            <h5>{heading}</h5>
             <div>
                 <label htmlFor="firstName">
                     First Name: {errors.firstName ? <em className="text-danger">required field</em> : ''}
@@ -43,7 +43,7 @@ const StudentForm = ({ state, campuses, handleSubmit, handleChange }) => {
 
             <div>
                 <label htmlFor="email">
-                    Email: {errors.email ? <em className="text-danger">required field</em> : ''}
+                    Email: {errors.email ? <em className="text-danger">must be a valid email address</em> : ''}
                 </label>
                 <input className="form-control" name="email" type="text" onChange={handleChange} value={state.email} />
             </div>
