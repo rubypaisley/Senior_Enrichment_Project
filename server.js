@@ -76,6 +76,19 @@ app.delete('/api/student/:id', (req, res, next) => {
         .catch(next)
 })
 
+app.put('/api/campus/:id', (req, res, next) => {
+    Campus.findByPk(req.params.id)
+        .then((campus) => campus.update(req.body))
+        .then(updatedCampus => res.send(updatedCampus))
+        .catch(next)
+})
+
+app.put('/api/student/:id', (req, res, next) => {
+    Student.findByPk(req.params.id)
+        .then(student => student.update(req.body))
+        .then(updatedStudent => res.send(updatedStudent))
+        .catch(next)
+})
 
 syncAndSeed()
     .then(() => app.listen(port, () => console.log(`listening on port ${port}`)))

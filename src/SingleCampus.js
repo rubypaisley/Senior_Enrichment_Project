@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getSingleCampus } from './store'
 import { Link } from 'react-router-dom'
+import UpdateCampus from './UpdateCampus'
 
 class DisSingleCampus extends Component {
-    componentDidMount() {
-        console.log(this.props.match.params.id)
-        this.props.getCampus(this.props.match.params.id)
+    constructor() {
+        super()
+        this.state = {
+            showUpdateView: false
+        }
+    }
+
+    handleClick = () => {
+        this.setState({ showUpdateView: !this.state.showUpdateView })
     }
     render() {
-        const { campus } = this.props;
-        if (!campus.id) {
+        const { campus, students } = this.props;
+        if (!campus) {
             return <div>campus not found</div>
         }
 
@@ -25,27 +31,24 @@ class DisSingleCampus extends Component {
                 <h5>Students:</h5>
                 <ul className="list-group">
                     {
-                        campus.students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
+                        students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
                     }
                 </ul>
+                <button type="button" onClick={this.handleClick} className="btn-primary">Update Campus</button>
+                {this.state.showUpdateView ? <UpdateCampus campus={campus} /> : ''}
             </div>
-
         )
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        campus: state.campus
+        campus: state.campuses.find(campus => campus.id === ownProps.match.params.id * 1),
+        students: state.students.filter(student => student.campusId === ownProps.match.params.id * 1)
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getCampus: (id) => dispatch(getSingleCampus(id))
-    }
-}
 
-const SingleCampus = connect(mapStateToProps, mapDispatchToProps)(DisSingleCampus)
+const SingleCampus = connect(mapStateToProps)(DisSingleCampus)
 
 export default SingleCampus

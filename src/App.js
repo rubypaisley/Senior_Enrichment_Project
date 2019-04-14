@@ -22,7 +22,7 @@ class DisApp extends React.Component {
                     <Navbar />
                     <hr />
                     <Switch>
-                        <Route exact path="/" component={AllCampuses} />
+                        <Route exact path="/" render={() => <h4>Welcome to the Student Directory!</h4>} />
                         <Route exact path="/campuses" component={AllCampuses} />
                         <Route exact path="/students" component={AllStudents} />
                         <Route path="/campus/:id" component={SingleCampus} />

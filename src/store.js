@@ -6,12 +6,26 @@ import thunk from 'redux-thunk'
 
 const GET_CAMPUSES = 'GET_CAMPUSES';
 const GET_STUDENTS = 'GET_STUDENTS';
-const GET_SINGLE_STUDENT = 'GET_SINGLE_STUDENT';
-const GET_SINGLE_CAMPUS = 'GET_SINGLE_CAMPUS';
 const ADD_CAMPUS = 'ADD_CAMPUS';
 const ADD_STUDENT = 'ADD_STUDENT';
 const DELETE_CAMPUS = 'DELETE_CAMPUS';
 const DELETE_STUDENT = 'DELETE_STUDENT';
+const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
+const UPDATE_STUDENT = 'UPDATE_STUDENT';
+
+const updateCampusAC = (campus) => {
+    return {
+        type: UPDATE_CAMPUS,
+        campus
+    }
+}
+
+const updateStudentAC = (student) => {
+    return {
+        type: UPDATE_STUDENT,
+        student
+    }
+}
 
 const deleteStudentAC = (studentId) => {
     return {
@@ -62,19 +76,6 @@ const getStudentsActionCreator = (students) => {
     }
 }
 
-const getStudentAC = (student) => {
-    return {
-        type: GET_SINGLE_STUDENT,
-        student
-    }
-}
-
-const getCampusAC = (campus) => {
-    return {
-        type: GET_SINGLE_CAMPUS,
-        campus
-    }
-}
 
 const campusReducer = (state = [], action) => {
     switch (action.type) {
@@ -84,6 +85,15 @@ const campusReducer = (state = [], action) => {
             return [...state, action.campus]
         case DELETE_CAMPUS:
             return state.filter(campus => campus.id !== action.campusId)
+        case UPDATE_CAMPUS:
+            return state.reduce((accum, campus) => {
+                if (campus.id === action.campus.id) {
+                    accum.push(action.campus)
+                } else {
+                    accum.push(campus)
+                }
+                return accum;
+            }, [])
         default:
             return state;
     }
@@ -103,26 +113,20 @@ const studentReducer = (state = [], action) => {
                 accum.push(student);
                 return accum;
             }, [])
+        case UPDATE_STUDENT:
+            return state.reduce((accum, student) => {
+                if (student.id === action.student.id) {
+                    accum.push(action.student)
+                } else {
+                    accum.push(student)
+                }
+                return accum;
+            }, [])
         default:
             return state;
     }
 }
 
-const singleStudentReducer = (state = {}, action) => {
-    switch (action.type) {
-        case GET_SINGLE_STUDENT:
-            return action.student;
-        default: return state;
-    }
-}
-
-const singleCampusReducer = (state = {}, action) => {
-    switch (action.type) {
-        case GET_SINGLE_CAMPUS:
-            return action.campus;
-        default: return state;
-    }
-}
 
 export const addCampus = (campusInfo) => {
     return dispatch => {
@@ -152,20 +156,6 @@ export const getStudents = () => {
     }
 }
 
-export const getSingleStudent = (id) => {
-    return dispatch => {
-        return axios.get(`/api/student/${id}`)
-            .then(res => dispatch(getStudentAC(res.data)))
-    }
-}
-
-export const getSingleCampus = (id) => {
-    console.log(id)
-    return dispatch => {
-        return axios.get(`api/campus/${id}`)
-            .then(res => dispatch(getCampusAC(res.data)))
-    }
-}
 
 export const deleteStudent = (id) => {
     return dispatch => {
@@ -182,7 +172,21 @@ export const deleteCampus = (id) => {
     }
 }
 
-const reducer = combineReducers({ campuses: campusReducer, students: studentReducer, campus: singleCampusReducer, student: singleStudentReducer })
+export const updateCampus = (id, campusInfo) => {
+    return dispatch => {
+        return axios.put(`api/campus/${id}`, campusInfo)
+            .then((res) => dispatch(updateCampusAC(res.data)))
+    }
+}
+
+export const updateStudent = (id, studentInfo) => {
+    return dispatch => {
+        return axios.put(`api/student/${id}`, studentInfo)
+            .then(res => dispatch(updateStudentAC(res.data)))
+    }
+}
+
+const reducer = combineReducers({ campuses: campusReducer, students: studentReducer })
 
 
 const store = createStore(
