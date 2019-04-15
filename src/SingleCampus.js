@@ -35,16 +35,18 @@ class DisSingleCampus extends Component {
 
                         <p>{campus.description}</p>
 
+                        <div>
+                            <h5>Students:</h5>
+                            <ul className="list-group">
+                                {
+                                    students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
+                                }
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
-                <div>
-                    <h5>Students:</h5>
-                    <ul className="list-group">
-                        {
-                            students.map(student => <li className="list-group-item" key={student.id}><Link to={`/student/${student.id}`}>{student.firstName} {student.lastName}</Link></li>)
-                        }
-                    </ul>
-                </div>
+
                 <button type="button" onClick={this.handleClick} className="btn-primary">Update Campus</button>
 
                 {this.state.showUpdateView ? <UpdateCampus campus={campus} /> : ''}
